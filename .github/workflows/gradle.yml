@@ -4,8 +4,11 @@ on:
     branches: [main, dev]
 
 jobs:
-  DEPLOY:
+  build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
     steps:
 
       - uses: actions/checkout@v3
@@ -16,7 +19,7 @@ jobs:
           distribution: 'temurin'
           
       - name: Build with Gradle
-        run: ./server/gradlew build
+        run: ./gradlew build
 
       - name: Docker build & push to prod
         if: contains(github.ref, 'main')
