@@ -1,7 +1,7 @@
 name: Backend CD
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   DEPLOY:
@@ -30,4 +30,4 @@ jobs:
         run: |
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p {{ secrets.DOCERHUB_PASSWORD }}
           docker build -f Dockerfile-dev -t ${{ secrets.DOCKERHUB_USERNAME }}/dh-server .
-          sh ${{ secrets.DOCKERHUB_USERNAME}}/dh-server
+          sh ${{ secrets.DOCKERHUB_USERNAME}}/dh-server 
