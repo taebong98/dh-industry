@@ -34,3 +34,18 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p {{ secrets.DOCERHUB_PASSWORD }}
           docker build -f Dockerfile-dev -t ${{ secrets.DOCKERHUB_USERNAME }}/dh-server .
           sh ${{ secrets.DOCKERHUB_USERNAME}}/dh-server 
+
+      - name: Deploy to dev
+        uses: appleboy/ssh-action@master
+        id: deploy-dev
+        if: contains(github.ref, 'dev')
+        with:
+          host: ${{ secrets.HOST_DEV }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/dh-server
+            docker run -d -t -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/dh-server
+            docker image prune -f
