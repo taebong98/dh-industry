@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ApiTestController {
-    @GetMapping("/hello")
-    public String helloWorld() {
-        return "Hello World!";
+
+    @GetMapping("/test/v1")
+    public String test1() {
+        return "배포 자동화 테스트 v1.";
     }
 }
