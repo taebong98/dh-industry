@@ -49,5 +49,5 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/dh-server
             docker stop $(docker ps -a -q) 
             docker rm $(docker ps -a -q) 
-            docker run -d -t -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/dh-server
+            sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/dh-server
             docker image prune -f
